@@ -1,0 +1,154 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   App Discotecas — sistema visual "premium nocturno"
+   Fondo negro/carbón, acentos violeta y rosa eléctrico, degradados discretos.
+   Prioridad: contraste, legibilidad y microinteracciones ligeras.
+   ============================================================================ */
+
+@theme {
+  --color-void: #050507;
+  --color-ink: #0b0b10;
+  --color-surface: #13131c;
+  --color-surface-raised: #1b1b28;
+  --color-surface-hover: #232333;
+  --color-line: #2a2a3a;
+  --color-line-strong: #3b3b52;
+
+  --color-text: #f5f5fa;
+  --color-text-secondary: #a7a7bd;
+  --color-text-muted: #6f6f88;
+
+  --color-neon-violet: #8b5cf6;
+  --color-neon-pink: #ec4899;
+  --color-neon-fuchsia: #d946ef;
+  --color-danger: #f43f5e;
+  --color-success: #34d399;
+  --color-warning: #fbbf24;
+
+  --font-sans: var(--font-app), ui-sans-serif, system-ui, sans-serif;
+
+  --animate-fade-in: fade-in 0.25s ease-out;
+  --animate-slide-up: slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-pulse-soft: pulse-soft 2.4s ease-in-out infinite;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.55; }
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--color-void);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+    min-height: 100dvh;
+  }
+
+  /* Fondo con destello neón muy sutil, sin ruidos ni brillos intensos. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(700px 420px at 12% -8%, rgb(139 92 246 / 0.14), transparent 60%),
+      radial-gradient(600px 380px at 92% 0%, rgb(236 72 153 / 0.10), transparent 60%);
+    z-index: 0;
+  }
+
+  ::selection {
+    background: rgb(139 92 246 / 0.35);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-neon-violet);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .surface {
+    @apply rounded-2xl border border-line bg-surface;
+  }
+
+  .neon-text {
+    background: linear-gradient(90deg, var(--color-neon-violet), var(--color-neon-pink));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .neon-border {
+    position: relative;
+    border: 1px solid transparent;
+    background:
+      linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+      linear-gradient(135deg, rgb(139 92 246 / 0.8), rgb(236 72 153 / 0.6)) border-box;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-white transition;
+    background: linear-gradient(135deg, var(--color-neon-violet), var(--color-neon-pink));
+  }
+  .btn-primary:hover { filter: brightness(1.08); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-line bg-surface px-4 py-2.5 text-sm font-semibold text-text transition;
+  }
+  .btn-secondary:hover { @apply bg-surface-hover; }
+  .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-text-secondary transition;
+  }
+  .btn-ghost:hover { @apply text-text bg-surface; }
+
+  .input {
+    @apply w-full rounded-xl border border-line bg-ink px-3.5 py-2.5 text-sm text-text placeholder:text-text-muted transition;
+  }
+  .input:focus {
+    outline: none;
+    border-color: var(--color-neon-violet);
+    box-shadow: 0 0 0 3px rgb(139 92 246 / 0.2);
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-sm font-medium text-text-secondary;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-line bg-surface px-3 py-1 text-xs font-medium text-text-secondary transition;
+  }
+  .chip[data-selected="true"] {
+    border-color: rgb(139 92 246 / 0.7);
+    background: rgb(139 92 246 / 0.15);
+    color: var(--color-text);
+  }
+}
+
+/* Scrollbar discreta acorde al tema. */
+@layer utilities {
+  .scrollbar-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: var(--color-line-strong);
+    border-radius: 9999px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+}

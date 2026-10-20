@@ -1,0 +1,23 @@
+{
+  "name": "app-discotecas",
+  "version": "0.1.0",
+  "private": true,
+  "description": "App Discotecas — Tu noche. Tu gente. Plataforma social de nightlife (Barcelona).",
+  "license": "UNLICENSED",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "dev": "npm run dev --workspace @app-discotecas/web",
+    "build": "npm run build --workspace @app-discotecas/web",
+    "start": "npm run start --workspace @app-discotecas/web",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "venues:import": "node scripts/import-venues.mjs"
+  }
+}
