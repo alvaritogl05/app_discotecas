@@ -1,1 +1,1 @@
-﻿# app_discotecas
+# app_discotecas
